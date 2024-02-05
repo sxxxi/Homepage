@@ -1,0 +1,6 @@
+[submodule "portfolio-revised"]
+	path = portfolio-revised
+	url = https://github.com/sxxxi/portfolio-revised.git
+[submodule "portfolio-server"]
+	path = portfolio-server
+	url = https://github.com/sxxxi/portfolio-server.git
