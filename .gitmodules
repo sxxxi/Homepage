@@ -1,6 +1,6 @@
 [submodule "portfolio-server"]
 	path = portfolio-server
-	url = https://github.com/sxxxi/portfolio-server.git
+	url = git@github.com:sxxxi/portfolio-server.git
 	branch = main
 [submodule "portfolio-fe"]
 	path = portfolio-fe
