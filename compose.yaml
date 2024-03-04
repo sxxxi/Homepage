@@ -1,0 +1,6 @@
+services:
+  portfolio-server:
+    build: 
+      context: "portfolio-server"
+    ports: 
+      - "8080:8080"
