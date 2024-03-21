@@ -2,7 +2,3 @@
 	path = portfolio-server
 	url = git@github.com:sxxxi/portfolio-server.git
 	branch = main
-[submodule "portfolio-fe"]
-	path = portfolio-fe
-	url = git@github.com:sxxxi/portfolio-fe.git
-	branch = main
