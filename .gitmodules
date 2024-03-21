@@ -4,5 +4,5 @@
 	branch = main
 [submodule "portfolio-revised"]
 	path = portfolio-revised
-	url = ./portfolio-revised/
+	url = git@github.com:sxxxi/portfolio-revised.git
 	branch = main
