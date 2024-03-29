@@ -10,6 +10,7 @@ services:
   portfolio-server:
     build: 
       context: "portfolio-server"
+    image: "sxxxi/portfolio-server"
     ports: 
       - 8080:8080
     volumes:
@@ -18,6 +19,7 @@ services:
   portfolio-revised:
     build:
       context: "portfolio-revised"
+    image: "sxxxi/portfolio-revised"
     ports: 
       - 3000:3000
     volumes:
