@@ -1,6 +1,32 @@
 services:
+  script:
+    image: alpine:latest
+    command: sh -c 'apk add openssl && /localScripts/create-keys.sh /shared/keys'
+    volumes:
+      - sharedVol:/shared
+      - ./scripts:/localScripts
+      - ./portfolio-fe/:/portfolio-fe
+
   portfolio-server:
     build: 
       context: "portfolio-server"
     ports: 
-      - "8080:8080"
+      - 8080:8080
+    volumes:
+      - sharedVol:/shared
+  
+  portfolio-revised:
+    build:
+      context: "portfolio-revised"
+    ports: 
+      - 3000:3000
+    volumes:
+      - sharedVol:/shared
+      # - ./portfolio-revised:/frontend
+
+
+
+volumes:
+  sharedVol:
+    external: false
+
