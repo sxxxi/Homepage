@@ -1,8 +1,0 @@
-[submodule "portfolio-server"]
-	path = portfolio-server
-	url = git@github.com:sxxxi/portfolio-server.git
-	branch = main
-[submodule "portfolio-revised"]
-	path = portfolio-revised
-	url = git@github.com:sxxxi/portfolio-revised.git
-	branch = main
