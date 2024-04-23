@@ -13,9 +13,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          name: sxxxi/portfolio-revised
+          repository: sxxxi/portfolio-revised
       - name: Did we pull the repo?
-        run: ls ./portfolio-revised
+        run: ls .
+      - uses: actions/checkout@v4
+        with:
+          repository: sxxxi/portfolio-server
+      - name: Did we pull the repo?
+        run: ls .
   # deploy:
   #   runs-on: ubuntu-latest
   #   steps:
