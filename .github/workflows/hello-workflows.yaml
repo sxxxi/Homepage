@@ -15,7 +15,7 @@ jobs:
         with:
           name: sxxxi/portfolio-revised
       - name: Did we pull the repo?
-        run: ls .
+        run: ls ./portfolio-revised
   # deploy:
   #   runs-on: ubuntu-latest
   #   steps:
