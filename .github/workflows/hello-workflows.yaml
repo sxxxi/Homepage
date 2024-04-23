@@ -10,12 +10,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "We are building bois!"
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "We are testing bois!"
-  run:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "We are running bois!"
+      - uses: actions/checkout@v4
+        with:
+          name: sxxxi/portfolio-revised
+      - name: Did we pull the repo?
+        run: ls .
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - run: echo "We are running bois!"
