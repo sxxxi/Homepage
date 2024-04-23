@@ -1,0 +1,21 @@
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is so fucking sexy!
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "We are building bois!"
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "We are testing bois!"
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "We are running bois!"
