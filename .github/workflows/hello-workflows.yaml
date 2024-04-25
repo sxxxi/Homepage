@@ -41,7 +41,7 @@ jobs:
         name: Build and push image to registry
         run: |
           docker compose build
-          docker compose push
+#          docker compose push
       - 
         name: Deploy to EC2 instance
         env:
