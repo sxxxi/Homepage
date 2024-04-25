@@ -40,7 +40,7 @@ jobs:
     steps:
       -
         name: Set environment variables
-        run: |
+        run: 
           export INSTANCE_IP=${{secrets.INSTANCE_IP}}
           export INSTANCE_HOST=ec2-user
           mkdir -p ~/.ssh
