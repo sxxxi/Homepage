@@ -8,33 +8,33 @@ on:
       - feature
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      -
-        name: Login to Dockerhub
-        uses: docker/login-action@v3
-        with:
-          registry: index.docker.io
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Pull repository 
-        uses: actions/checkout@v4
-      -
-        name: Update and clone submodules
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{secrets.GH_PRIVATE_KEY}}" > ~/.ssh/actions-key
-          sudo chmod 600 ~/.ssh/actions-key
-          eval `ssh-agent -s`
-          ssh-add ~/.ssh/actions-key
-          git submodule update --remote --init
-      -
-        name: Build and push image to registry
-        run: |
-          docker compose build
-          docker compose push
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     -
+  #       name: Login to Dockerhub
+  #       uses: docker/login-action@v3
+  #       with:
+  #         registry: index.docker.io
+  #         username: ${{ secrets.DOCKERHUB_USERNAME }}
+  #         password: ${{ secrets.DOCKERHUB_TOKEN }}
+  #     -
+  #       name: Pull repository 
+  #       uses: actions/checkout@v4
+  #     -
+  #       name: Update and clone submodules
+  #       run: |
+  #         mkdir -p ~/.ssh
+  #         echo "${{secrets.GH_PRIVATE_KEY}}" > ~/.ssh/actions-key
+  #         sudo chmod 600 ~/.ssh/actions-key
+  #         eval `ssh-agent -s`
+  #         ssh-add ~/.ssh/actions-key
+  #         git submodule update --remote --init
+  #     -
+  #       name: Build and push image to registry
+  #       run: |
+  #         docker compose build
+  #         docker compose push
   deploy: 
     runs-on: ubuntu-latest
     steps:
@@ -50,7 +50,7 @@ jobs:
       -
         name: Test alias
         run: |
-          ls
+          touch ~/konseki.txt
 
 
   # deploy:
