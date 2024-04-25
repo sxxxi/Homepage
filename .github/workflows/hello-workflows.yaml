@@ -48,9 +48,8 @@ jobs:
           echo "${{secrets.AWS_PRIVATE_KEY}}" > ~/.ssh/aws_key.pem
           echo "StrictHostKeyChecking=no" > ~/.ssh/config
           sudo chmod 600 ~/.ssh/aws_key.pem
-          alias bonk='ssh -i ~/.ssh/aws_key.pem $INSTANCE_HOST@$INSTANCE_IP'
-          sleep 3
-          bonk ls /
+          ssh -i ~/.ssh/aws_key.pem $INSTANCE_HOST@$INSTANCE_IP
+          ls 
 
   # deploy:
   #   runs-on: ubuntu-latest
