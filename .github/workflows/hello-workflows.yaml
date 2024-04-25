@@ -15,7 +15,7 @@ jobs:
         name: Save Github public key
         run: |
           mkdir -p ~/.ssh
-          echo "${{secrets.GH_PRIVATE_KEY}}" > actions-key
+          echo "${{secrets.GH_PRIVATE_KEY}}" > ~/.ssh/actions-key
           sudo chmod 600 ~/.ssh/actions-key
           eval "ssh-agent -s"
           ssh-add ~/.ssh/actions-key
