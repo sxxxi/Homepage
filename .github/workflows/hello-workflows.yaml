@@ -13,9 +13,9 @@ jobs:
     steps:
       -
         name: Save Github public key
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.GH_PRIVATE_KEY }}
+        run: |
+          eval "ssh-agent -s"
+          ssh-add ${{ secrets.GH_PRIVATE_KEY }}
       -
         name: Login to Dockerhub
         uses: docker/login-action@v3
