@@ -45,6 +45,7 @@ jobs:
           export INSTANCE_HOST=ec2-user
           mkdir -p ~/.ssh
           echo "${{secrets.AWS_PRIVATE_KEY}}" > ~/.ssh/aws_key.pem
+          echo "StrictHostKeyChecking=no" > ~/.ssh/config
           sudo chmod 600 ~/.ssh/aws_key.pem
           alias bonk='ssh -i ~/.ssh/aws_key.pem $INSTANCE_HOST@$INSTANCE_IP'
           ssh -i ~/.ssh/aws_key.pem $INSTANCE_HOST@$INSTANCE_IP touch ~/konseki.txt
