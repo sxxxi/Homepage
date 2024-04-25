@@ -21,7 +21,10 @@ jobs:
         name: Setup github access key
         uses: webfactory/ssh-agent@v0.9.0
         with:
-          ssh-private-key: ${{ secrets.GH_PRIVATE_KEY }}
+          ssh-private-key: |
+            ${{ secrets.GH_PRIVATE_KEY }}
+            ${{ secrets.AWS_PRIVATE_KEY }}
+
             
       # -
       #   name: Pull repository 
@@ -54,11 +57,6 @@ jobs:
           INSTANCE_HOST: ec2-user
           IDENTITY: /home/runner/.ssh/aws_key.pem
         run: |
-          mkdir -p ~/.ssh
-          echo "${{secrets.AWS_PRIVATE_KEY}}" > $IDENTITY
-          sudo chmod 600 $IDENTITY
-          eval `ssh-agent -s`
-          ssh-add $IDENTITY
           echo "StrictHostKeyChecking=no" > ~/.ssh/config
           ssh $INSTANCE_HOST@$INSTANCE_IP 'if [[ -d /home/ec2-user/home ]]; 
             then 
@@ -70,3 +68,13 @@ jobs:
           ssh $INSTANCE_HOST@$INSTANCE_IP git clone git@github.com:sxxxi/Homepage /home/ec2-user/home
           ssh $INSTANCE_HOST@$INSTANCE_IP cd /home/ec2-user/home
           ssh $INSTANCE_HOST@$INSTANCE_IP docker-compose up -d
+
+
+  # f:
+  #   steps:
+  #     - run: |
+  #       mkdir -p ~/.ssh
+  #       echo "${{secrets.AWS_PRIVATE_KEY}}" > $IDENTITY
+  #       sudo chmod 600 $IDENTITY
+  #       eval `ssh-agent -s`
+  #       ssh-add $IDENTITY
