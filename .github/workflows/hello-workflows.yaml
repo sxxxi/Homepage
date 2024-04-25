@@ -37,19 +37,21 @@ jobs:
   #         docker compose push
   deploy: 
     runs-on: ubuntu-latest
-  
     steps:
       - 
         name: Set environment variables
+        env:
+          INSTANCE_IP: ${{secrets.INSTANCE_IP}}
+          INSTANCE_HOST: ec2-user
+          IDENTITY_FILE: ~/.ssh/aws_key.pem
         run: |
-          export INSTANCE_IP=${{secrets.INSTANCE_IP}}
-          export INSTANCE_HOST=ec2-user
           mkdir -p ~/.ssh
-          echo "${{secrets.AWS_PRIVATE_KEY}}" > ~/.ssh/aws_key.pem
+          echo "${{secrets.AWS_PRIVATE_KEY}}" > $IDENTITY_FILE
           echo "StrictHostKeyChecking=no" > ~/.ssh/config
-          sudo chmod 600 ~/.ssh/aws_key.pem
-          ssh -i ~/.ssh/aws_key.pem $INSTANCE_HOST@$INSTANCE_IP
-          touch konsekikiki.txt
+          sudo chmod 600 $IDENTITY_FILE
+          eval `ssh-agent -s`
+          ssh-add $IDENTITY_FILE
+          ssh -i $INSTANCE_HOST@$INSTANCE_IP touch konkon.txt
 
   # deploy:
   #   runs-on: ubuntu-latest
