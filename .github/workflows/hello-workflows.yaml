@@ -48,17 +48,9 @@ jobs:
           echo "${{secrets.AWS_PRIVATE_KEY}}" > ~/.ssh/aws_key.pem
           echo "StrictHostKeyChecking=no" > ~/.ssh/config
           sudo chmod 600 ~/.ssh/aws_key.pem
-          shopt -s expand_aliases
           alias bonk='ssh -i ~/.ssh/aws_key.pem $INSTANCE_HOST@$INSTANCE_IP'
-          ssh -i ~/.ssh/aws_key.pem $INSTANCE_HOST@$INSTANCE_IP cd
-          ssh -i ~/.ssh/aws_key.pem $INSTANCE_HOST@$INSTANCE_IP touch konseki.txt
-      -
-        name: Test alias
-        run: |
-          bonk cd
-          bonk touch ~/konseki2.txt
-          echo hello
-
+          sleep 3
+          bonk ls /
 
   # deploy:
   #   runs-on: ubuntu-latest
