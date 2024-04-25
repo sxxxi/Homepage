@@ -15,7 +15,7 @@ jobs:
         name: Save Github public key
         run : |
           mkdir ~/.ssh
-          echo ${{ secrets.GH_PRIVATE_KEY }} > ~/.ssh/gitkey
+          echo '${{ secrets.GH_PRIVATE_KEY }}' > ~/.ssh/gitkey
           chmod 600 ~/.ssh/gitkey
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/gitkey
