@@ -43,14 +43,13 @@ jobs:
         env:
           INSTANCE_IP: ${{secrets.INSTANCE_IP}}
           INSTANCE_HOST: ec2-user
-          IDENTITY_FILE: ~/.ssh/aws_key.pem
         run: |
           mkdir -p ~/.ssh
-          echo "${{secrets.AWS_PRIVATE_KEY}}" > $IDENTITY_FILE
-          echo "StrictHostKeyChecking=no" > ~/.ssh/config
-          sudo chmod 600 $IDENTITY_FILE
+          echo "${{secrets.AWS_PRIVATE_KEY}}" > ~/.ssh/aws_key.pem 
+          sudo chmod 600 ~/.ssh/aws_key.pem
           eval `ssh-agent -s`
-          ssh-add $IDENTITY_FILE
+          ssh-add ~/.ssh/aws_key.pem
+          echo "StrictHostKeyChecking=no" > ~/.ssh/config
           ssh -i $INSTANCE_HOST@$INSTANCE_IP touch konkon.txt
 
   # deploy:
