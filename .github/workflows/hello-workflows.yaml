@@ -33,10 +33,25 @@ jobs:
       -
         name: Build and push image to registry
         run: |
-          ls .
-          ls portfolio-server
-          ls portfolio-revised
-          docker-compose -v
+          docker compose build
+          docker compose push
+  deploy: 
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Set environment variables
+        run: |
+          export INSTANCE_IP=${{secrets.INSTANCE_IP}}
+          export INSTANCE_HOST=ec2-user
+          mkdir -p ~/.ssh
+          echo "${{secrets.AWS_PRIVATE_KEY}}" > ~/.ssh/aws_key.pem
+          sudo chmod 600 ~/.ssh/aws_key.pem
+          alias bonk='ssh -i ~/.ssh/aws_key.pem $INSTANCE_HOST@$INSTANCE_IP'
+      -
+        name: Test alias
+        run: |
+          ls
+
 
   # deploy:
   #   runs-on: ubuntu-latest
