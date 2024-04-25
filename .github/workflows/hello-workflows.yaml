@@ -47,10 +47,12 @@ jobs:
           echo "${{secrets.AWS_PRIVATE_KEY}}" > ~/.ssh/aws_key.pem
           sudo chmod 600 ~/.ssh/aws_key.pem
           alias bonk='ssh -i ~/.ssh/aws_key.pem $INSTANCE_HOST@$INSTANCE_IP'
-          touch ~/konseki.txt
+          bonk touch ~/konseki.txt
       -
         name: Test alias
-        run: echo hello
+        run: |
+          bonk touch ~/konseki2.txt
+          echo hello
 
 
   # deploy:
