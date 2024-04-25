@@ -16,8 +16,8 @@ jobs:
         run : |
           mkdir ~/.ssh
           echo '${{ secrets.GH_PRIVATE_KEY }}' > ~/.ssh/gitkey
-          chmod 600 ~/.ssh/gitkey
-          ssh-agent -s
+          sudo chmod 600 ~/.ssh/gitkey
+          eval `ssh-agent -s`
           ssh-add ~/.ssh/gitkey
       -
         name: Login to Dockerhub
