@@ -36,42 +36,41 @@ jobs:
       #     eval `ssh-agent -s`
       #     ssh-add ~/.ssh/actions-key
       #     git submodule update --remote --init
-      # -
-      #   name: Prepare env file
-      #   run: |
-      #     echo "
-      #     AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}}
-      #     AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}}
-      #     " > .env
+      -
+        name: Prepare env file
+        run: |
+          echo "
+          AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}}
+          AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}}
+          " > .env
       # -
       #   name: Build and push image to registry
       #   run: |
       #     docker compose build
       #     docker compose push
+      -
+        name: Initialize repository in deployment machine
+        run: |
+          echo "StrictHostKeyChecking=no" > ~/.ssh/config
+          ssh $INSTANCE_HOST@$INSTANCE_IP '
+            # Destroy previous deployment
+            if [[ -d /home/ec2-user/home ]]; then 
+              cd /home/ec2-user/home; 
+              docker-compose down; 
+              cd ..; 
+              sudo rm -rf /home/ec2-user/home; 
+            fi;
+            git clone https://github.com/sxxxi/Homepage /home/ec2-user/home
       - 
-        name: Deploy to EC2 instance
+        name: Copy .env file and Deploy to EC2 instance
         env:
           INSTANCE_IP: ${{secrets.INSTANCE_IP}}
           INSTANCE_HOST: ec2-user
           IDENTITY: /home/runner/.ssh/aws_key.pem
         run: |
           echo "StrictHostKeyChecking=no" > ~/.ssh/config
-          ssh $INSTANCE_HOST@$INSTANCE_IP 'if [[ -d /home/ec2-user/home ]]; 
-            then 
-              cd /home/ec2-user/home; 
-              docker-compose down; 
-              cd ..; 
-              sudo rm -rf /home/ec2-user/home; 
-            fi'
-          ssh $INSTANCE_HOST@$INSTANCE_IP git clone https://github.com/sxxxi/Homepage /home/ec2-user/home
-          ssh $INSTANCE_HOST@$INSTANCE_IP cd /home/ec2-user/home && docker-compose up -d
-
-
-  # f:
-  #   steps:
-  #     - run: |
-  #       mkdir -p ~/.ssh
-  #       echo "${{secrets.AWS_PRIVATE_KEY}}" > $IDENTITY
-  #       sudo chmod 600 $IDENTITY
-  #       eval `ssh-agent -s`
-  #       ssh-add $IDENTITY
+          sftp $INSTANCE_HOST@$INSTANCE_IP:/home/ec2-user/home <<< $'put .env'
+          ssh $INSTANCE_HOST@$INSTANCE_IP '
+            cd /home/ec2-user/home
+            docker-compose up -d
+          '
