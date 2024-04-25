@@ -17,30 +17,30 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Pull repository 
-        uses: actions/checkout@v4
-      -
-        name: Update and clone submodules
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{secrets.GH_PRIVATE_KEY}}" > ~/.ssh/actions-key
-          sudo chmod 600 ~/.ssh/actions-key
-          eval `ssh-agent -s`
-          ssh-add ~/.ssh/actions-key
-          git submodule update --remote --init
-      -
-        name: Prepare env file
-        run: |
-          echo "
-          AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}}
-          AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}}
-          " > .env
-      -
-        name: Build and push image to registry
-        run: |
-          docker compose build
-          docker compose push
+      # -
+      #   name: Pull repository 
+      #   uses: actions/checkout@v4
+      # -
+      #   name: Update and clone submodules
+      #   run: |
+      #     mkdir -p ~/.ssh
+      #     echo "${{secrets.GH_PRIVATE_KEY}}" > ~/.ssh/actions-key
+      #     sudo chmod 600 ~/.ssh/actions-key
+      #     eval `ssh-agent -s`
+      #     ssh-add ~/.ssh/actions-key
+      #     git submodule update --remote --init
+      # -
+      #   name: Prepare env file
+      #   run: |
+      #     echo "
+      #     AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}}
+      #     AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}}
+      #     " > .env
+      # -
+      #   name: Build and push image to registry
+      #   run: |
+      #     docker compose build
+      #     docker compose push
       - 
         name: Deploy to EC2 instance
         env:
@@ -55,13 +55,10 @@ jobs:
           eval `ssh-agent -s`
           ssh-add $IDENTITY
           echo "StrictHostKeyChecking=no" > ~/.ssh/config
-          ssh $INSTANCE_HOST@$INSTANCE_IP if [[ -d $APP_SRC ]]; 
-            then
-              cd $APP_SRC;
-              docker-compose down;
-              cd ..;
-              rm -rf $APP_SRC;
-            fi
+          ssh $INSTANCE_HOST@$INSTANCE_IP /bin/bash -c 'if [[ -d $APP_SRC ]]; then cd $APP_SRC; docker-compose down; cd ..; rm -rf $APP_SRC; fi'
           ssh $INSTANCE_HOST@$INSTANCE_IP git clone git@github.com:sxxxi/Homepage $APP_SRC
           ssh $INSTANCE_HOST@$INSTANCE_IP cd $APP_SRC
           ssh $INSTANCE_HOST@$INSTANCE_IP docker-compose up -d
+
+
+          
