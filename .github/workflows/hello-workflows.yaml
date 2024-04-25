@@ -74,5 +74,6 @@ jobs:
           sftp $INSTANCE_HOST@$INSTANCE_IP:/home/ec2-user/home <<< $'put .env'
           ssh $INSTANCE_HOST@$INSTANCE_IP '
             cd /home/ec2-user/home
+            docker-compose pull
             docker-compose up -d
           '
