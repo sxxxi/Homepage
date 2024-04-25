@@ -55,10 +55,12 @@ jobs:
           eval `ssh-agent -s`
           ssh-add $IDENTITY
           echo "StrictHostKeyChecking=no" > ~/.ssh/config
-          ssh $INSTANCE_HOST@$INSTANCE_IP /bin/bash -c 'if [[ -d $APP_SRC ]]; then cd $APP_SRC; docker-compose down; cd ..; rm -rf $APP_SRC; fi'
+          ssh $INSTANCE_HOST@$INSTANCE_IP 'if [[ -d $APP_SRC ]]; 
+            then 
+              cd $APP_SRC; 
+              docker-compose down; 
+              cd ..; rm -rf $APP_SRC; 
+            fi'
           ssh $INSTANCE_HOST@$INSTANCE_IP git clone git@github.com:sxxxi/Homepage $APP_SRC
           ssh $INSTANCE_HOST@$INSTANCE_IP cd $APP_SRC
           ssh $INSTANCE_HOST@$INSTANCE_IP docker-compose up -d
-
-
-          
