@@ -59,7 +59,7 @@ jobs:
               cd /home/ec2-user/home; 
               docker-compose down; 
               cd ..; 
-              rm -rf /home/ec2-user/home; 
+              sudo rm -rf /home/ec2-user/home; 
             fi'
           ssh $INSTANCE_HOST@$INSTANCE_IP git clone git@github.com:sxxxi/Homepage /home/ec2-user/home
           ssh $INSTANCE_HOST@$INSTANCE_IP cd /home/ec2-user/home
