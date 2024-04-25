@@ -50,6 +50,9 @@ jobs:
       #     docker compose push
       -
         name: Initialize repository in deployment machine
+        env:
+          INSTANCE_IP: ${{secrets.INSTANCE_IP}}
+          INSTANCE_HOST: ec2-user
         run: |
           echo "StrictHostKeyChecking=no" > ~/.ssh/config
           ssh $INSTANCE_HOST@$INSTANCE_IP '
@@ -67,7 +70,6 @@ jobs:
         env:
           INSTANCE_IP: ${{secrets.INSTANCE_IP}}
           INSTANCE_HOST: ec2-user
-          IDENTITY: /home/runner/.ssh/aws_key.pem
         run: |
           echo "StrictHostKeyChecking=no" > ~/.ssh/config
           sftp $INSTANCE_HOST@$INSTANCE_IP:/home/ec2-user/home <<< $'put .env'
