@@ -24,8 +24,6 @@ jobs:
           ssh-private-key: |
             ${{ secrets.GH_PRIVATE_KEY }}
             ${{ secrets.AWS_PRIVATE_KEY }}
-
-            
       # -
       #   name: Pull repository 
       #   uses: actions/checkout@v4
@@ -65,7 +63,7 @@ jobs:
               cd ..; 
               sudo rm -rf /home/ec2-user/home; 
             fi'
-          ssh $INSTANCE_HOST@$INSTANCE_IP git clone git@github.com:sxxxi/Homepage /home/ec2-user/home
+          ssh $INSTANCE_HOST@$INSTANCE_IP git clone https://github.com/sxxxi/Homepage /home/ec2-user/home
           ssh $INSTANCE_HOST@$INSTANCE_IP cd /home/ec2-user/home
           ssh $INSTANCE_HOST@$INSTANCE_IP docker-compose up -d
 
