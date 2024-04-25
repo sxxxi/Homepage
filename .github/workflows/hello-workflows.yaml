@@ -17,7 +17,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{secrets.GH_PRIVATE_KEY}}" > ~/.ssh/actions-key
           sudo chmod 600 ~/.ssh/actions-key
-          eval "ssh-agent -s"
+          eval `ssh-agent -s`
           ssh-add ~/.ssh/actions-key
       -
         name: Login to Dockerhub
