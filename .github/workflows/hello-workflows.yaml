@@ -43,7 +43,7 @@ jobs:
         env:
           INSTANCE_IP: ${{secrets.INSTANCE_IP}}
           INSTANCE_HOST: ec2-user
-          IDENTITY: ~/.ssh/aws_key.pem
+          IDENTITY: /home/runner/.ssh/aws_key.pem
         run: |
           mkdir -p ~/.ssh
           echo "${{secrets.AWS_PRIVATE_KEY}}" > $IDENTITY
