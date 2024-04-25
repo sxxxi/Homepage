@@ -64,8 +64,7 @@ jobs:
               sudo rm -rf /home/ec2-user/home; 
             fi'
           ssh $INSTANCE_HOST@$INSTANCE_IP git clone https://github.com/sxxxi/Homepage /home/ec2-user/home
-          ssh $INSTANCE_HOST@$INSTANCE_IP cd /home/ec2-user/home
-          ssh $INSTANCE_HOST@$INSTANCE_IP docker-compose up -d
+          ssh $INSTANCE_HOST@$INSTANCE_IP cd /home/ec2-user/home && docker-compose up -d
 
 
   # f:
