@@ -15,7 +15,7 @@ jobs:
         name: Save Github public key
         run : |
           mkdir ~/.ssh
-          echo ${{ secrets.GH_PUBLIC_KEY }} > ~/.ssh/gitkey.pub
+          echo ${{ secrets.GH_PRIVATE_KEY }} > ~/.ssh/gitkey.pub
       -
         name: Login to Dockerhub
         uses: docker/login-action@v3
