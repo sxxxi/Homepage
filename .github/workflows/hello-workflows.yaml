@@ -49,7 +49,7 @@ jobs:
           echo "StrictHostKeyChecking=no" > ~/.ssh/config
           sudo chmod 600 ~/.ssh/aws_key.pem
           ssh -i ~/.ssh/aws_key.pem $INSTANCE_HOST@$INSTANCE_IP
-          ls 
+          touch konsekikiki.txt
 
   # deploy:
   #   runs-on: ubuntu-latest
