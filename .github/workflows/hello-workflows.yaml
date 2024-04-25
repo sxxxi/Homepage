@@ -47,7 +47,6 @@ jobs:
           INSTANCE_IP: ${{secrets.INSTANCE_IP}}
           INSTANCE_HOST: ec2-user
           IDENTITY: /home/runner/.ssh/aws_key.pem
-          APP_SRC: /home/ec2-user/home
         run: |
           mkdir -p ~/.ssh
           echo "${{secrets.AWS_PRIVATE_KEY}}" > $IDENTITY
@@ -55,12 +54,13 @@ jobs:
           eval `ssh-agent -s`
           ssh-add $IDENTITY
           echo "StrictHostKeyChecking=no" > ~/.ssh/config
-          ssh $INSTANCE_HOST@$INSTANCE_IP 'if [[ -d $APP_SRC ]]; 
+          ssh $INSTANCE_HOST@$INSTANCE_IP 'if [[ -d /home/ec2-user/home ]]; 
             then 
-              cd $APP_SRC; 
+              cd /home/ec2-user/home; 
               docker-compose down; 
-              cd ..; rm -rf $APP_SRC; 
+              cd ..; 
+              rm -rf /home/ec2-user/home; 
             fi'
-          ssh $INSTANCE_HOST@$INSTANCE_IP git clone git@github.com:sxxxi/Homepage $APP_SRC
-          ssh $INSTANCE_HOST@$INSTANCE_IP cd $APP_SRC
+          ssh $INSTANCE_HOST@$INSTANCE_IP git clone git@github.com:sxxxi/Homepage /home/ec2-user/home
+          ssh $INSTANCE_HOST@$INSTANCE_IP cd /home/ec2-user/home
           ssh $INSTANCE_HOST@$INSTANCE_IP docker-compose up -d
