@@ -1,5 +1,5 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is so fucking sexy!
+name: Homepage main pipeline
+run-name: ci/cd
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
       - feature
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       -
@@ -42,11 +42,8 @@ jobs:
         run: |
           docker compose build
           docker compose push
-  deploy: 
-    runs-on: ubuntu-latest
-    steps:
       - 
-        name: Set environment variables
+        name: Deploy to EC2 instance
         env:
           INSTANCE_IP: ${{secrets.INSTANCE_IP}}
           INSTANCE_HOST: ec2-user
