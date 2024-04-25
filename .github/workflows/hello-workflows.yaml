@@ -50,7 +50,7 @@ jobs:
           eval `ssh-agent -s`
           ssh-add ~/.ssh/aws_key.pem
           echo "StrictHostKeyChecking=no" > ~/.ssh/config
-          ssh -i $INSTANCE_HOST@$INSTANCE_IP touch konkon.txt
+          ssh $INSTANCE_HOST@$INSTANCE_IP touch konkon.txt
 
   # deploy:
   #   runs-on: ubuntu-latest
